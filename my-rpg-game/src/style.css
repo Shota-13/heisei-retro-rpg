@@ -1,296 +1,278 @@
+/* path: src/style.css
+   レイアウト: PC=画面だけ中央 / スマホ縦持ち=上に画面・下に操作盤(GBC風)
+   操作盤を出すかどうかは、JS が <html class="has-controls"> を付けて切り替える(main.ts) */
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --bg: #0b0d12;
+  --panel: #232734;
+  --panel-edge: #3a4052;
+  --panel-pressed: #6c7bb8;
+  --ink: #e6e9f2;
+  --btn: #a8435a;
+  --btn-edge: #6e2a3a;
+  --btn-pressed: #d46a82;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  /* 十字キー: 見た目の大きさと、判定領域を見た目より広げる余白(指がずれても外れにくくする) */
+  --dpad-size: clamp(120px, 38vw, 168px);
+  --dpad-pad: 24px;
+  --btn-size: clamp(54px, 16vw, 68px);
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  /* ゲーム画面の高さの上限(操作盤ありのときは画面の約6割まで) */
+  --frame-max-h: 100dvh;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+html.has-controls {
+  --frame-max-h: 60dvh;
 }
 
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
 body {
   margin: 0;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
-}
-
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
-
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-}
-
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
+  height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  font-family: system-ui, -apple-system, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
 }
 
 #app {
-  width: 1126px;
-  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* dvh 非対応ブラウザ用 */
+  height: 100dvh;
+  padding-top: env(safe-area-inset-top);
+}
+
+/* ゲーム画面: 4:3 固定。幅は「画面幅」か「高さ上限×4/3」の小さい方 */
+#game-frame {
+  flex: none;
+  width: min(100vw, calc(var(--frame-max-h) * 4 / 3));
+  aspect-ratio: 4 / 3;
   margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+  background: #000;
 }
 
-#center {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
-}
-
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-}
-
-#next-steps ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
-
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
-}
-
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
-}
-
-.ticks {
-  position: relative;
+#game {
   width: 100%;
+  height: 100%;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
+#game canvas {
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  touch-action: none;
+}
+
+/* PCでは、画面だけを上下左右中央に置く */
+html:not(.has-controls) #app {
+  justify-content: center;
+}
+
+/* ---- 操作盤 ---------------------------------------------------------- */
+
+#controls {
+  display: none;
+  flex: 1;
+  min-height: 0;
+  padding: 16px 20px calc(16px + env(safe-area-inset-bottom));
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    'dpad ab'
+    'meta meta';
+  align-items: center;
+  touch-action: none;
+}
+
+html.has-controls #controls {
+  display: grid;
+}
+
+/* 十字キー: 外側の要素が判定領域(見た目より --dpad-pad だけ広い)。負のマージンでレイアウト上の大きさは見た目と同じにする */
+.dpad {
+  grid-area: dpad;
+  justify-self: start;
+  position: relative;
+  width: calc(var(--dpad-size) + var(--dpad-pad) * 2);
+  height: calc(var(--dpad-size) + var(--dpad-pad) * 2);
+  margin: calc(var(--dpad-pad) * -1);
+  touch-action: none;
+}
+
+.dpad-visual {
+  position: absolute;
+  inset: var(--dpad-pad);
+  pointer-events: none; /* イベントは外側の .dpad が受ける */
+}
+
+.arm {
+  position: absolute;
+  background: var(--panel);
+  border: 2px solid var(--panel-edge);
+}
+.arm.up {
+  left: 33.33%;
+  top: 0;
+  width: 33.34%;
+  height: 40%;
+  border-radius: 10px 10px 0 0;
+}
+.arm.down {
+  left: 33.33%;
+  bottom: 0;
+  width: 33.34%;
+  height: 40%;
+  border-radius: 0 0 10px 10px;
+}
+.arm.left {
+  left: 0;
+  top: 33.33%;
+  width: 40%;
+  height: 33.34%;
+  border-radius: 10px 0 0 10px;
+}
+.arm.right {
+  right: 0;
+  top: 33.33%;
+  width: 40%;
+  height: 33.34%;
+  border-radius: 0 10px 10px 0;
+}
+.dpad-center {
+  position: absolute;
+  left: 33.33%;
+  top: 33.33%;
+  width: 33.34%;
+  height: 33.34%;
+  background: var(--panel);
+}
+
+.dpad.is-up .arm.up,
+.dpad.is-down .arm.down,
+.dpad.is-left .arm.left,
+.dpad.is-right .arm.right {
+  background: var(--panel-pressed);
+}
+
+/* A / B: GBC のように、Bを左下・Aを右上に斜めに並べる */
+.ab {
+  grid-area: ab;
+  justify-self: end;
+  position: relative;
+  width: calc(var(--btn-size) * 2 + 14px);
+  height: calc(var(--btn-size) * 1.75);
+}
+
+.btn {
+  position: absolute;
+  width: var(--btn-size);
+  height: var(--btn-size);
+  padding: 0;
+  border: 3px solid var(--btn-edge);
+  border-radius: 50%;
+  background: var(--btn);
+  color: var(--ink);
+  font: 700 20px/1 system-ui, sans-serif;
+  touch-action: none;
+}
+.btn-a {
+  right: 0;
+  top: 0;
+}
+.btn-b {
+  left: 0;
+  bottom: 0;
+}
+
+/* MENU / SELECT: 普段のプレイ中に押し間違えにくい、画面下の中央 */
+.meta {
+  grid-area: meta;
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  padding-top: 12px;
+}
+
+.pill {
+  min-width: 96px;
+  height: 44px;
+  padding: 0 14px;
+  border: 2px solid var(--panel-edge);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--ink);
+  font: 600 12px/1 system-ui, sans-serif;
+  letter-spacing: 0.08em;
+  touch-action: none;
+}
+
+.btn.is-down {
+  background: var(--btn-pressed);
+  transform: scale(0.94);
+}
+.pill.is-down {
+  background: var(--panel-pressed);
+  transform: scale(0.96);
+}
+
+/* ---- 横持ち(暫定): 操作盤を画面に重ねる。実機で確認して作り直す ---------- */
+@media (orientation: landscape) {
+  html.has-controls {
+    --frame-max-h: 100dvh;
   }
-
-  &::before {
+  html.has-controls #app {
+    justify-content: center;
+  }
+  html.has-controls #controls {
+    position: fixed;
+    inset: 0;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    pointer-events: none;
+    grid-template-rows: 1fr;
+    grid-template-areas: 'dpad ab';
+    align-items: end;
+  }
+  html.has-controls .dpad,
+  html.has-controls .ab,
+  html.has-controls .meta {
+    pointer-events: auto;
+  }
+  html.has-controls .meta {
+    position: fixed;
     left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
     right: 0;
-    border-right-color: var(--border);
+    bottom: calc(8px + env(safe-area-inset-bottom));
+    pointer-events: none;
   }
+  html.has-controls .meta .pill {
+    pointer-events: auto;
+    opacity: 0.8;
+  }
+}
+
+/* ---- 開発用 ---------------------------------------------------------- */
+
+#debug-hud {
+  position: fixed;
+  top: env(safe-area-inset-top);
+  left: 0;
+  z-index: 10;
+  margin: 0;
+  padding: 4px 6px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #7dff9b;
+  font: 10px/1.4 ui-monospace, Menlo, Consolas, monospace;
+  pointer-events: none;
+  white-space: pre;
 }

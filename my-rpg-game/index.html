@@ -1,13 +1,44 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>my-rpg-game</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#0b0d12" />
+    <link rel="icon" href="data:," />
+    <title>RPG Prototype</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div id="game-frame">
+        <div id="game"></div>
+      </div>
+
+      <!-- スマホ用の操作盤(HTML/CSS)。PCでは非表示。?touch=1 でPCでも表示 -->
+      <div id="controls" aria-label="操作盤">
+        <div class="dpad" data-dpad>
+          <div class="dpad-visual" data-dpad-visual>
+            <div class="arm up"></div>
+            <div class="arm down"></div>
+            <div class="arm left"></div>
+            <div class="arm right"></div>
+            <div class="dpad-center"></div>
+          </div>
+        </div>
+
+        <div class="ab">
+          <button type="button" tabindex="-1" class="btn btn-b" data-action="cancel" aria-label="B">B</button>
+          <button type="button" tabindex="-1" class="btn btn-a" data-action="confirm" aria-label="A">A</button>
+        </div>
+
+        <div class="meta">
+          <button type="button" tabindex="-1" class="pill" data-action="select">SELECT</button>
+          <button type="button" tabindex="-1" class="pill" data-action="menu">MENU</button>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
