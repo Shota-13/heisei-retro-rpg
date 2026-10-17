@@ -1,5 +1,0 @@
-{
-  "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.64.0"
-  }
-}
