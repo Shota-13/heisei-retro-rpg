@@ -1,0 +1,25 @@
+[
+  {
+    "id": "event.field.npc.blue",
+    "commands": [
+      { "type": "say", "textId": "text.npc.blue.greet" },
+      { "type": "say", "textId": "text.npc.blue.follow_up" }
+    ]
+  },
+  {
+    "id": "event.field.npc.red",
+    "commands": [{ "type": "say", "textId": "text.npc.red.greet" }]
+  },
+  {
+    "id": "event.field.npc.green",
+    "commands": [
+      { "type": "say", "textId": "text.npc.green.greet" },
+      { "type": "say", "textId": "text.npc.green.follow_up" }
+    ]
+  },
+  {
+    "id": "event.field.npc.yellow",
+    "commands": [{ "type": "say", "textId": "text.npc.yellow.greet" }]
+  }
+]
+

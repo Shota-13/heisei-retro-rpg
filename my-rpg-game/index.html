@@ -8,34 +8,48 @@
     />
     <meta name="theme-color" content="#0b0d12" />
     <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/src/style.css" />
     <title>RPG Prototype</title>
   </head>
   <body>
     <div id="app">
       <div id="game-frame">
         <div id="game"></div>
+        <div id="dialogue" class="dialogue-box" role="status" aria-live="polite" hidden></div>
       </div>
 
       <!-- スマホ用の操作盤(HTML/CSS)。PCでは非表示。?touch=1 でPCでも表示 -->
       <div id="controls" aria-label="操作盤">
         <div class="dpad" data-dpad>
           <div class="dpad-visual" data-dpad-visual>
-            <div class="arm up"></div>
-            <div class="arm down"></div>
-            <div class="arm left"></div>
-            <div class="arm right"></div>
-            <div class="dpad-center"></div>
+            <img class="dpad-image" src="/assets/input-Xbox/Double/xbox_dpad.png" alt="" />
+            <img class="dpad-image dpad-up" src="/assets/input-Xbox/Double/xbox_dpad_up.png" alt="" />
+            <img class="dpad-image dpad-down" src="/assets/input-Xbox/Double/xbox_dpad_down.png" alt="" />
+            <img class="dpad-image dpad-left" src="/assets/input-Xbox/Double/xbox_dpad_left.png" alt="" />
+            <img class="dpad-image dpad-right" src="/assets/input-Xbox/Double/xbox_dpad_right.png" alt="" />
           </div>
         </div>
 
         <div class="ab">
-          <button type="button" tabindex="-1" class="btn btn-b" data-action="cancel" aria-label="B">B</button>
-          <button type="button" tabindex="-1" class="btn btn-a" data-action="confirm" aria-label="A">A</button>
+          <button type="button" tabindex="-1" class="btn btn-b image-control" data-action="cancel" aria-label="B">
+            <img class="image-default" src="/assets/input-Xbox/Double/xbox_button_color_b.png" alt="" />
+            <img class="image-pressed" src="/assets/input-Xbox/Double/xbox_button_color_b_outline.png" alt="" />
+          </button>
+          <button type="button" tabindex="-1" class="btn btn-a image-control" data-action="confirm" aria-label="A">
+            <img class="image-default" src="/assets/input-Xbox/Double/xbox_button_color_a.png" alt="" />
+            <img class="image-pressed" src="/assets/input-Xbox/Double/xbox_button_color_a_outline.png" alt="" />
+          </button>
         </div>
 
         <div class="meta">
-          <button type="button" tabindex="-1" class="pill" data-action="select">SELECT</button>
-          <button type="button" tabindex="-1" class="pill" data-action="menu">MENU</button>
+          <button type="button" tabindex="-1" class="pill image-control" data-action="select" aria-label="BACK">
+            <img class="image-default" src="/assets/input-Xbox/Double/xbox_button_back.png" alt="" />
+            <img class="image-pressed" src="/assets/input-Xbox/Double/xbox_button_back_outline.png" alt="" />
+          </button>
+          <button type="button" tabindex="-1" class="pill image-control" data-action="menu" aria-label="START">
+            <img class="image-default" src="/assets/input-Xbox/Double/xbox_button_start.png" alt="" />
+            <img class="image-pressed" src="/assets/input-Xbox/Double/xbox_button_start_outline.png" alt="" />
+          </button>
         </div>
       </div>
     </div>

@@ -1,0 +1,8 @@
+{
+  "text.npc.blue.greet": "目覚める準備はできたか？ここはシミュレーションの世界だ。",
+  "text.npc.blue.follow_up": "君がブラウザを閉じれば、この世界は即座に無へと還元される。",
+  "text.npc.red.greet": "静かだね？",
+  "text.npc.green.greet": "この世界の物理法則はただの数式ってことよ",
+  "text.npc.green.follow_up": "でも、まだ物理法則のレンダリングが追いついていないみたい",
+  "text.npc.yellow.greet": "また話そう。shota.maeda氏のコードに消される前に。"
+}
