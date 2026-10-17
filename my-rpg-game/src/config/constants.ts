@@ -40,6 +40,12 @@ export const TEXTURE_KEYS = {
     left: 'tex_player_left',
     right: 'tex_player_right',
   },
+  npc: {
+    blue: 'tex_npc_blue',
+    red: 'tex_npc_red',
+    green: 'tex_npc_green',
+    yellow: 'tex_npc_yellow',
+  },
   wall: 'tex_wall',
   floor: 'tex_floor',
 } as const;

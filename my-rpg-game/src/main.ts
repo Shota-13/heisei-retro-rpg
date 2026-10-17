@@ -1,6 +1,5 @@
 // path: src/main.ts
 import Phaser from 'phaser';
-import './style.css';
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from './config/constants';
 import { DEBUG_FLAGS } from './config/debug';
 import { provideServices } from './core/services';

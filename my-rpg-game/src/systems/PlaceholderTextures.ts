@@ -5,6 +5,12 @@ import { PLACEHOLDER_COLORS as C } from '../config/placeholder';
 import type { Facing } from '../entities/facing';
 
 const FACINGS: readonly Facing[] = ['up', 'down', 'left', 'right'];
+const NPC_TEXTURES = [
+  { key: TEXTURE_KEYS.npc.blue, shirtColor: C.npcShirts.blue },
+  { key: TEXTURE_KEYS.npc.red, shirtColor: C.npcShirts.red },
+  { key: TEXTURE_KEYS.npc.green, shirtColor: C.npcShirts.green },
+  { key: TEXTURE_KEYS.npc.yellow, shirtColor: C.npcShirts.yellow },
+] as const;
 
 /** 仮素材をコードで生成する。本素材(ドット絵)が入ったら、BootScene の preload に置き換える。 */
 export function createPlaceholderTextures(scene: Phaser.Scene): void {
@@ -27,6 +33,16 @@ export function createPlaceholderTextures(scene: Phaser.Scene): void {
     if (facing === 'left') g.fillRect(4, 6, 2, 2);
     if (facing === 'right') g.fillRect(10, 6, 2, 2);
     g.generateTexture(TEXTURE_KEYS.player[facing], CHARACTER_WIDTH, CHARACTER_HEIGHT);
+  }
+
+  for (const { key, shirtColor } of NPC_TEXTURES) {
+    g.clear();
+    g.fillStyle(C.pants, 1).fillRect(4, 18, 3, 6).fillRect(9, 18, 3, 6);
+    g.fillStyle(shirtColor, 1).fillRect(3, 10, 10, 9);
+    g.fillStyle(C.skin, 1).fillRect(3, 1, 10, 9);
+    g.fillStyle(C.hair, 1).fillRect(3, 1, 10, 3);
+    g.fillStyle(C.eye, 1).fillRect(5, 6, 2, 2).fillRect(9, 6, 2, 2);
+    g.generateTexture(key, CHARACTER_WIDTH, CHARACTER_HEIGHT);
   }
 
   // 床タイル 16×16
