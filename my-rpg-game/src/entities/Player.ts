@@ -38,6 +38,10 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     return this.facing;
   }
 
+  setEyesClosed(isClosed: boolean): void {
+    this.setTexture(isClosed ? TEXTURE_KEYS.player.downBlink : TEXTURE_KEYS.player.down);
+  }
+
   move(direction: MoveVector): void {
     this.setVelocity(direction.x * PLAYER_SPEED, direction.y * PLAYER_SPEED);
 

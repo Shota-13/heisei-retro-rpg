@@ -3,9 +3,17 @@ export interface SayCommand {
   readonly textId: string;
 }
 
+export interface InputCommand {
+  readonly type: 'input';
+  readonly inputId: string;
+  readonly textId: string;
+}
+
+export type EventCommand = SayCommand | InputCommand;
+
 export interface EventDefinition {
   readonly id: string;
-  readonly commands: readonly SayCommand[];
+  readonly commands: readonly EventCommand[];
 }
 
 export class EventRunner {
@@ -17,7 +25,7 @@ export class EventRunner {
     this.eventsById = parseEvents(rawEvents);
   }
 
-  start(eventId: string): SayCommand {
+  start(eventId: string): EventCommand {
     if (this.isRunning()) {
       throw new Error(`Cannot start event "${eventId}" while another event is running`);
     }
@@ -36,7 +44,7 @@ export class EventRunner {
     return command;
   }
 
-  advance(): SayCommand | null {
+  advance(): EventCommand | null {
     if (!this.currentEvent) return null;
 
     const command = this.currentEvent.commands[this.commandIndex];
@@ -72,17 +80,27 @@ function parseEvents(rawEvents: unknown): ReadonlyMap<string, EventDefinition> {
       throw new Error(`Event id "${rawEvent.id}" is duplicated`);
     }
 
-    const commands: SayCommand[] = [];
+    const commands: EventCommand[] = [];
     for (const [commandIndex, rawCommand] of rawEvent.commands.entries()) {
-      if (
-        !isRecord(rawCommand) ||
-        rawCommand.type !== 'say' ||
-        typeof rawCommand.textId !== 'string' ||
-        !rawCommand.textId.trim()
-      ) {
+      if (!isRecord(rawCommand) || typeof rawCommand.textId !== 'string' || !rawCommand.textId.trim()) {
         throw new Error(`Command ${commandIndex} in event "${rawEvent.id}" is invalid`);
       }
-      commands.push({ type: 'say', textId: rawCommand.textId });
+
+      if (rawCommand.type === 'say') {
+        commands.push({ type: 'say', textId: rawCommand.textId });
+      } else if (
+        rawCommand.type === 'input' &&
+        typeof rawCommand.inputId === 'string' &&
+        rawCommand.inputId.trim()
+      ) {
+        commands.push({
+          type: 'input',
+          inputId: rawCommand.inputId,
+          textId: rawCommand.textId,
+        });
+      } else {
+        throw new Error(`Command ${commandIndex} in event "${rawEvent.id}" is invalid`);
+      }
     }
 
     eventsById.set(rawEvent.id, { id: rawEvent.id, commands });

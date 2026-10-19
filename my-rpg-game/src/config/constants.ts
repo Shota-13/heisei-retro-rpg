@@ -37,6 +37,7 @@ export const TEXTURE_KEYS = {
   player: {
     up: 'tex_player_up',
     down: 'tex_player_down',
+    downBlink: 'tex_player_down_blink',
     left: 'tex_player_left',
     right: 'tex_player_right',
   },
@@ -45,6 +46,8 @@ export const TEXTURE_KEYS = {
     red: 'tex_npc_red',
     green: 'tex_npc_green',
     yellow: 'tex_npc_yellow',
+    purple: 'tex_npc_purple',
+    cyan: 'tex_npc_cyan',
   },
   wall: 'tex_wall',
   floor: 'tex_floor',
