@@ -75,13 +75,116 @@ body {
   touch-action: none;
 }
 
+.wake-overlay {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.wake-overlay[hidden] {
+  display: none;
+}
+.wake-lid {
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: 50%;
+  background: #000;
+  transform: scaleY(1);
+}
+.wake-overlay.is-opening .wake-lid {
+  animation: wake-open 1.5s cubic-bezier(0.35, 0, 0.2, 1) both;
+}
+.wake-lid-top {
+  top: 0;
+  transform-origin: 50% 100%;
+}
+.wake-lid-bottom {
+  bottom: 0;
+  transform-origin: 50% 0;
+}
+.wake-glint {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: #c8ffd8;
+  box-shadow: 0 0 24px 8px rgba(0, 255, 65, 0.85), 0 0 64px 18px rgba(0, 255, 65, 0.35);
+  opacity: 0;
+}
+.wake-overlay::before {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(0, 255, 65, 0.3), rgba(0, 70, 25, 0.12) 38%, transparent 75%);
+  content: '';
+  opacity: 0;
+}
+.wake-overlay.is-opening .wake-glint {
+  animation: wake-glint 1.5s ease-out both;
+}
+.wake-overlay.is-opening::before {
+  animation: wake-green-glow 1.5s ease-out both;
+}
+#game-frame.is-waking #game canvas {
+  animation: wake-focus 1.5s ease-out both;
+}
+@keyframes wake-open {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(0);
+  }
+}
+@keyframes wake-glint {
+  0%,
+  35% {
+    opacity: 0;
+  }
+  55% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes wake-focus {
+  from {
+    filter: blur(5px) brightness(0.45) sepia(1) saturate(5) hue-rotate(65deg);
+  }
+  to {
+    filter: none;
+  }
+}
+@keyframes wake-green-glow {
+  0% {
+    opacity: 0;
+  }
+  45% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wake-lid,
+  .wake-glint,
+  .wake-overlay::before,
+  #game-frame.is-waking #game canvas {
+    animation-duration: 1ms;
+  }
+}
+
 .dialogue-box {
   position: absolute;
   z-index: 1;
   right: 2%;
   bottom: 2%;
   left: 2%;
-  min-height: 23%;
+  height: 23%;
   padding: 2%;
   border: 2px solid #f2f4f8;
   background: rgba(17, 24, 39, 0.96);
@@ -91,8 +194,100 @@ body {
   white-space: pre-wrap;
   pointer-events: none;
 }
+.dialogue-speaker {
+  position: absolute;
+  top: -0.3em;
+  left: calc(4% - 0.5em);
+  transform: translateY(-50%);
+  padding: 0.1em 0.6em;
+  border: 2px solid #f2f4f8;
+  border-radius: 0.4em;
+  background: rgba(17, 24, 39, 0.96);
+  font-weight: 700;
+  line-height: 1.2;
+}
+.dialogue-text {
+  position: absolute;
+  inset: 0;
+  padding: 2%;
+}
+.dialogue-name-form {
+  position: absolute;
+  right: 2%;
+  bottom: 8%;
+  left: 2%;
+  display: flex;
+  gap: 0.5em;
+  pointer-events: auto;
+}
+.dialogue-name-form[hidden] {
+  display: none;
+}
+.dialogue-name-input {
+  min-width: 0;
+  flex: 1;
+  padding: 0.35em 0.5em;
+  border: 1px solid #f2f4f8;
+  border-radius: 0.2em;
+  background: rgba(7, 11, 20, 0.9);
+  color: #ffffff;
+  font: inherit;
+  user-select: text;
+}
+.dialogue-name-submit {
+  padding: 0.35em 0.75em;
+  border: 1px solid #f2f4f8;
+  border-radius: 0.2em;
+  background: #232734;
+  color: #ffffff;
+  font: inherit;
+}
 .dialogue-box[hidden] {
   display: none;
+}
+.game-ending {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  overflow: hidden;
+  background: #030a07;
+  color: #ffffff;
+  text-align: center;
+}
+.game-ending[hidden] {
+  display: none;
+}
+.game-ending-rain {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.game-ending-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  width: max-content;
+  max-width: 88%;
+  padding: 1.5em 2em;
+  border: 2px solid #f2f4f8;
+  background: rgba(5, 16, 10, 0.88);
+  transform: translate(-50%, -50%);
+}
+.game-ending-card[hidden] {
+  display: none;
+}
+.game-ending-message {
+  margin: 0;
+  font-size: clamp(16px, 2.2vw, 24px);
+  font-weight: 700;
+  line-height: 1.6;
+}
+.game-ending-caption {
+  margin: 0.8em 0 0;
+  color: #c5cad5;
+  font-size: clamp(12px, 1.5vw, 16px);
 }
 
 /* PCでは、画面だけを上下左右中央に置く */

@@ -1,8 +1,14 @@
 {
   "text.npc.blue.greet": "目覚める準備はできたか？ここはシミュレーションの世界だ。",
-  "text.npc.blue.follow_up": "君がブラウザを閉じれば、この世界は即座に無へと還元される。",
-  "text.npc.red.greet": "静かだね？",
-  "text.npc.green.greet": "この世界の物理法則はただの数式ってことよ",
-  "text.npc.green.follow_up": "でも、まだ物理法則のレンダリングが追いついていないみたい",
-  "text.npc.yellow.greet": "また話そう。shota.maeda氏のコードに消される前に。"
+  "text.npc.blue.ask_name": "現実世界では名前は何と呼ばれている？",
+  "text.npc.blue.name_greeting": "ようこそ真実の世界へ",
+  "text.npc.blue.farewell": "道を知ることと、その道を歩むことは違う。また会おう、{playerName}。",
+  "text.npc.red.greet": "静かだわね",
+  "text.npc.green.greet": "この世界の物理法則はただの数式ってことよ、{playerNameWithHonorific}。",
+  "text.npc.green.follow_up": "でも、まだ空間のレンダリングが追いついていないみたい。景色も何も無いだろう？",
+  "text.npc.yellow.greet": "また話そう、{playerNameWithHonorific}。shota.maeda氏のコードに消される前に。",
+  "text.npc.purple.greet": "自分を信じろ。",
+  "text.npc.cyan.greet": "人が『現実』と呼んでいるものは、ただ五感が受け取った電気の信号に過ぎない。",
+  "text.npc.cyan.follow_up": "手で画面を触れた感触、スマホ画面、誰かがあなたに見せようとしている幻覚かもしれないとしたら？",
+  "text.npc.cyan.follow_up2": "今考えているその心すらも、ただの作られた計算だとしたら？"
 }

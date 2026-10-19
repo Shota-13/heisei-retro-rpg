@@ -3,7 +3,9 @@
     "id": "event.field.npc.blue",
     "commands": [
       { "type": "say", "textId": "text.npc.blue.greet" },
-      { "type": "say", "textId": "text.npc.blue.follow_up" }
+      { "type": "input", "inputId": "playerName", "textId": "text.npc.blue.ask_name" },
+      { "type": "say", "textId": "text.npc.blue.name_greeting" },
+      { "type": "say", "textId": "text.npc.blue.farewell" }
     ]
   },
   {
@@ -20,6 +22,17 @@
   {
     "id": "event.field.npc.yellow",
     "commands": [{ "type": "say", "textId": "text.npc.yellow.greet" }]
+  },
+  {
+    "id": "event.field.npc.purple",
+    "commands": [{ "type": "say", "textId": "text.npc.purple.greet" }]
+  },
+  {
+    "id": "event.field.npc.cyan",
+    "commands": [
+      { "type": "say", "textId": "text.npc.cyan.greet" },
+      { "type": "say", "textId": "text.npc.cyan.follow_up" },
+      { "type": "say", "textId": "text.npc.cyan.follow_up2" }
+    ]
   }
 ]
-

@@ -15,7 +15,34 @@
     <div id="app">
       <div id="game-frame">
         <div id="game"></div>
-        <div id="dialogue" class="dialogue-box" role="status" aria-live="polite" hidden></div>
+        <div id="wake-overlay" class="wake-overlay" aria-hidden="true">
+          <div class="wake-lid wake-lid-top"></div>
+          <div class="wake-lid wake-lid-bottom"></div>
+          <div class="wake-glint"></div>
+        </div>
+        <div id="dialogue" class="dialogue-box" role="status" aria-live="polite" hidden>
+          <div id="dialogue-speaker" class="dialogue-speaker"></div>
+          <div id="dialogue-text" class="dialogue-text"></div>
+          <form id="dialogue-name-form" class="dialogue-name-form" hidden>
+            <input
+              id="dialogue-name-input"
+              class="dialogue-name-input"
+              type="text"
+              autocomplete="nickname"
+              aria-label="あなたの名前"
+              placeholder="名前を入力"
+              required
+            />
+            <button class="dialogue-name-submit" type="submit">決定</button>
+          </form>
+        </div>
+        <div id="game-ending" class="game-ending" role="status" aria-live="polite" hidden>
+          <canvas class="game-ending-rain" aria-hidden="true"></canvas>
+          <div class="game-ending-card" hidden>
+            <p class="game-ending-message">ここまでしか作れてません!!<br />コツコツ作っていきます</p>
+            <p class="game-ending-caption">6人全員と話しました</p>
+          </div>
+        </div>
       </div>
 
       <!-- スマホ用の操作盤(HTML/CSS)。PCでは非表示。?touch=1 でPCでも表示 -->
